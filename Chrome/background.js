@@ -8,7 +8,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
       console.log(storageChange);
       isDisabled = storageChange;
       console.log(isDisabled);
-    } 
+    }
   }
 });
 
@@ -18,37 +18,13 @@ chrome.webRequest.onBeforeRequest.addListener(
                 // set badge text to indicate that a help widget is available
                 chrome.browserAction.setBadgeText({text: "HELP", tabId: details.tabId});
 
-                  if (isDisabled) {
-                    return { cancel: false } // this should return from the function (details) level
-                  } else {
-                    return { cancel: true }
-                  }
+                if (!isDisabled && details.initiator.indexOf("atlassian.net") != -1) {
+                  return { cancel: true }
+                } else {
+                  return { cancel: false }
+                }
               },
               {urls: [
-                "*://widget.intercom.io/*",
-                "*://connect.facebook.net/en_US/sdk/xfbml.customerchat.js",
-                "*://assets.producthunt.com/assets/upwigloader.js",
-                "*://js.driftt.com/include/*",
-                "*://*.crisp.chat/*",
-                "*://*.intergram.xyz/js/*",
-                "*://widget.mfy.im/*",
-                "*://connect.podium.com/*",
-                "*://js.usemessages.com/*",
-                "*://static.getchipbot.com/",
-                "*://static.zdassets.com/ekr/snippet.js",
-                "*://www.couchbase.com/webfiles/1552355627964/js/contact-popup-form.js",
-                "*://assetscdn-wchat.freshchat.com/*",
-                "*://wchat.freshchat.com/*",
-                "*://code.jivosite.com/script/widget/*",
-                "*://code.tidio.co/*",
-                "*://*.user.com/static/js/*",
-                "*://secure.livechatinc.com/*",
-                "*://*.justanswer.com/revizely/2/core/ja-com.js",
-                "*://code.snapengage.com/*",
-                "*://sdk.inbenta.io/chatbot/*",
-                "*://pi2.movoto.com/1.7.654/javascripts/desktop/movoto.min.js",
-                "*://*.zopim.com/*",
-                "*://cdn.gubagoo.io/*",
-                "*://leadconnect.ipmaxi.se/*"
+                "*://widget.intercom.io/*"
               ]},
               ["blocking"]);
